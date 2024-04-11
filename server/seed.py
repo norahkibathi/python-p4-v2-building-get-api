@@ -9,6 +9,24 @@ from models import db, Game, Review, User
 
 
 fake = Faker()
+class Game(db.Model, SerializerMixin):
+    __tablename__ = "games"
+
+    serialize_rules = ("-reviews.game",)
+
+    # columns, repr
+
+class Review(db.Model, SerializerMixin):
+    __tablename__ = "reviews"
+
+    serialize_rules = ("-game.reviews", "-user.reviews",)
+
+    # columns, repr
+
+class User(db.Model, SerializerMixin):
+    __tablename__ = "users"
+
+    serialize_rules = ("-reviews.user",)
 
 with app.app_context():
 
